@@ -101,6 +101,7 @@ function initTmap() {
                             iconSize : new Tmapv2.Size(38, 38),
                             map : map
                         });
+                    //지도 중앙에 마커 표시
                     map.setCenter(markerPosition);
 
                     // 검색 결과 표출
@@ -110,10 +111,7 @@ function initTmap() {
                     var city, gu_gun, eup_myun, legalDong, adminDong, ri, bunji;
                     var buildingName, buildingDong, newRoadName, newBuildingIndex, newBuildingName, newBuildingDong;
                     
-                    // 새주소일 때 검색 결과 표출
-                    // 새주소인 경우 matchFlag가 아닌
-                    // newMatchFlag가 응답값으로
-                    // 온다
+                    // 새주소일 때 검색 결과 표출 새주소인 경우 matchFlag가 아닌 newMatchFlag가 응답값으로 온다
                     if (resultCoordinate.newMatchFlag.length > 0) {
                         // 새(도로명) 주소 좌표 매칭
                         // 구분 코드
@@ -263,7 +261,7 @@ function initTmap() {
                 console.log("code:"+request.status + "\n message:" + request.responseText +"\n error:" + error);
                 // 에러가 발생하면 맵을 초기화함
                 // markerStartLayer.clearMarkers();
-                // 마커초기화
+                // 마커초기화 위치는 살바도르의 집 DMC센트럴
                 map.setCenter(new Tmapv2.LatLng(37.574989, 126.896907));
                 $("#result").html("");
             

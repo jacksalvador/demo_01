@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const fetchDataButton = document.getElementById('fetch-button');
   const apiDataDiv = document.getElementById('api-data');
 
   // Replace 'YOUR_API_URL_HERE' with the actual API URL you want to call
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const appKey = '3oBTY2lRKl35FpTvZ93WA8G6YUAoKtbxmdrz3PY0';
 
   // Variable to store the total time
-  let totalTime = 0;
+  let totalTimes = {};
 
   // Function to get the current time in the required format
   function getCurrentTime() {
@@ -25,7 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const timezoneMinutes = (Math.abs(timezoneOffset) % 60).toString().padStart(2, '0');
     const timezoneSign = timezoneOffset > 0 ? '-' : '+';
 
+    // ISO-8601 표준 형태 예) 2013-05-19T18:31:22+0900
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${timezoneSign}${timezoneHours}${timezoneMinutes}`;
+  }
+
+  // Function to format the total time in minutes
+  function formatTotalTime(totalSeconds) {
+    const totalMinutes = Math.ceil(totalSeconds / 60);
+    return `${totalMinutes}` + "분";
   }
 
   // Add an event listener for the 'geocodingComplete' event
@@ -73,19 +79,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const responseTotalTime = data.features[0].properties.totalTime;
 
         // Add the totalTime from this response to the accumulated totalTime
-        totalTime += responseTotalTime;
+        totalTimes[getCurrentTime()] = responseTotalTime;
 
-        // Update the webpage with the accumulated totalTime
-        apiDataDiv.innerHTML = `Total Time: ${totalTime} seconds`;
+        // Update the webpage with the accumulated totalTimes in key-value format
+        apiDataDiv.innerHTML = '';
+        for (const key in totalTimes) {
+          apiDataDiv.innerHTML += `${key}: ${formatTotalTime(totalTimes[key])}<br>`;
+        }
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
-  });
-
-  fetchDataButton.addEventListener('click', function () {
-    // Trigger the geocoding process here, which will eventually dispatch the 'geocodingComplete' event
-    // Make sure the geocoding process sets the 'lat' and 'lon' values correctly
-    // ...
   });
 });
