@@ -1,18 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>TmapOPT</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=3oBTY2lRKl35FpTvZ93WA8G6YUAoKtbxmdrz3PY0"></script>
+	</head>
+	<body>
+		<p id="result"></p>
+		<input type="text" class="text_custom" id="fullAddr"
+			name="fullAddr" value="DMC센트럴">
+		<button id="btn_select">적용하기</button>
+		<div id="map_wrap" class="map_wrap">
+			<div id="map_div"></div>
+		</div>
+		<div class="map_act_btn_wrap clear_box"></div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Demo</title>
-</head>
+		<!-- New HTML code for displaying API data -->
+		<h1>API Data:</h1>
+		<div id="api-data"></div>
+		<button id="fetch-button">Fetch Data</button>
 
-<body>
-  <h1>API Data:</h1>
-  <div id="api-data"></div>
-  <button id="fetch-button">Fetch Data</button>
+		<!-- Include your JavaScript files at the end of the body -->
+		<script src="src/geocoding.js"></script>
+		<script src="src/timemachine.js"></script>
 
-  <script src="src/script.js"></script>
-</body>
-
+		<!-- Call the initTmap function after your JavaScript is loaded -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				initTmap();
+			});
+		</script>
+	</body>
 </html>
