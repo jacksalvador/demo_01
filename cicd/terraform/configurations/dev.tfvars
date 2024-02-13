@@ -10,9 +10,8 @@ environment  = "dev"
 service_name = "demo_01"
 
 common_tags = {
-  CREATEDBY   = "terraform:demo_01"
-  SYSTEM      = "demo_01"
-  SERVICE     = "demo_01"
-  ENVIRONMENT = "dev"
-  USER        = "salva"
+  CREATEDBY = "terraform:demo_01"
+  SYSTEM    = "demo_01"
+  SERVICE   = "demo_01"
+  USER      = "salva"
 }
