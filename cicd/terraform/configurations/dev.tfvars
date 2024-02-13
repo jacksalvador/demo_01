@@ -14,4 +14,5 @@ common_tags = {
   SYSTEM      = "demo_01"
   SERVICE     = "demo_01"
   ENVIRONMENT = "dev"
+  USER        = "salva"
 }

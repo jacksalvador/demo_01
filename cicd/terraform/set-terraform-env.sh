@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ./로 직접 실행하는 것을 방지하는 조건문. 직접 실행할 경우 스크립트 파일은 별도 프로세스로 실행되어
 # 스크립트에서 세팅한 환경변수들이 프로세스 종료와 함께 날아간다. 따라서 source 혹은 . 으로 실행을 강제 
 if [ "$0" = "$BASH_SOURCE" ]
@@ -34,7 +33,6 @@ S3FOLDERPROJ=$(grep s3_folder_project "$DATAFILE" | awk -F '=' '{print $2}' | se
 S3BUCKETREGION=$(grep s3_bucket_region "$DATAFILE" | awk -F '=' '{print $2}' | sed -e 's/["\ ]//g')
 AWSDEPLOYREGION=$(grep aws_region "$DATAFILE" | awk -F '=' '{print $2}' | sed -e 's/["\ ]//g')
 S3TFSTATEFILE=$(grep s3_tfstate_file "$DATAFILE" | awk -F '=' '{print $2}' | sed -e 's/["\ ]//g')
-DYNAMOTABLE=$(grep dynamodb_table "$DATAFILE" | awk -F '=' '{print $2}' | sed -e 's/["\ ]//g')
 
 # 모든 파라미터 값이 정상적으로 들어갔는지 확인
 if [ -z "$ENVIRONMENT" ]
@@ -80,7 +78,6 @@ terraform {
     bucket = "${S3BUCKET}"
     key    = "${S3FOLDERPROJ}/${AWSDEPLOYREGION}/${ENVIRONMENT}/${S3TFSTATEFILE}"
     region = "${S3BUCKETREGION}"
-    dynamodb_table = "${DYNAMOTABLE}"
     encrypt = true
   }
 }
@@ -88,10 +85,10 @@ EOF
 
 # Verify if user has valid AWS credentials in current session
 if CALLER_IDENTITY=$(aws sts get-caller-identity 2>&1); then
-   echo "Using AWS Identity: ${CALLER_IDENTITY}"
+    echo "Using AWS Identity: ${CALLER_IDENTITY}"
 else
-   echo "set-terraform-env.sh: Please run 'get-temporary-aws-credentials.sh' first"
-   return 1
+    echo "set-terraform-env.sh: Please run 'get-temporary-aws-credentials.sh' first"
+    return 1
 fi
 
 export DATAFILE
